@@ -139,8 +139,8 @@ public class BasicOpMode_Iterative extends OpMode
         // Send calculated power to wheels
         topLeftMotor.setPower(topLeftPower);
         topRightMotor.setPower(topRightPower);
-        botRightMotor.setPower(botLeftPower)
-        botRightMotor.setPower(botRightPower)
+        botRightMotor.setPower(botLeftPower);
+        botRightMotor.setPower(botRightPower);
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
