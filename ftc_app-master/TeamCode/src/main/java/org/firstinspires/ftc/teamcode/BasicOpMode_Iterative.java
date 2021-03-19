@@ -52,7 +52,6 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @TeleOp(name="Basic: Iterative OpMode", group="Iterative Opmode")
-@Disabled
 public class BasicOpMode_Iterative extends OpMode
 {
     // Declare OpMode members.
@@ -61,6 +60,16 @@ public class BasicOpMode_Iterative extends OpMode
     private DcMotor topRightMotor = null;
     private DcMotor botLeftMotor = null;
     private DcMotor botRightMotor = null;
+    private DcMotor intakeMotor = null;
+    private DcMotor shootMotor = null;
+
+
+    public static double booleanToDouble(boolean b) {
+        if (b) {
+            return 1;
+        }
+        return 0;
+    }
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -76,6 +85,8 @@ public class BasicOpMode_Iterative extends OpMode
         topRightMotor = hardwareMap.get(DcMotor.class, "topRightMotor");
         botRightMotor = hardwareMap.get(DcMotor.class, "botRightMotor");
         botLeftMotor = hardwareMap.get(DcMotor.class, "botLeftMotor");
+        intakeMotor = hardwareMap.get(DcMotor.class, "intake");
+        shootMotor = hardwareMap.get(DcMotor.class, "shoot");
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
@@ -83,6 +94,9 @@ public class BasicOpMode_Iterative extends OpMode
         topRightMotor.setDirection(DcMotor.Direction.REVERSE);
         botLeftMotor.setDirection(DcMotor.Direction.FORWARD);
         botRightMotor.setDirection(DcMotor.Direction.REVERSE);
+        intakeMotor.setDirection(DcMotor.Direction.REVERSE);
+        shootMotor.setDirection(DcMotor.Direction.FORWARD);
+        
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -94,6 +108,8 @@ public class BasicOpMode_Iterative extends OpMode
     @Override
     public void init_loop() {
     }
+
+
 
     /*
      * Code to run ONCE when the driver hits PLAY
@@ -113,6 +129,8 @@ public class BasicOpMode_Iterative extends OpMode
         double topRightPower;
         double botLeftPower;
         double botRightPower;
+        boolean intake;
+        boolean shoot;
 
 
         // Choose to drive using either Tank Mode, or POV Mode
@@ -122,7 +140,9 @@ public class BasicOpMode_Iterative extends OpMode
         // - This uses basic math to combine motions and is easier to drive straight.
         double drive = -gamepad1.left_stick_y;
         double turn  =  gamepad1.right_stick_x;
-        double horizental = gamepad1.left_stick_y;
+        double horizental = -gamepad1.left_stick_x;
+         intake  =  gamepad1.a;
+         shoot  =  gamepad1.b;
 
 
         topLeftPower    = Range.clip(drive + turn + horizental, -1.0, 1.0) ;
@@ -139,12 +159,17 @@ public class BasicOpMode_Iterative extends OpMode
         // Send calculated power to wheels
         topLeftMotor.setPower(topLeftPower);
         topRightMotor.setPower(topRightPower);
-        botRightMotor.setPower(botLeftPower);
+        botLeftMotor.setPower(botLeftPower);
         botRightMotor.setPower(botRightPower);
+        intakeMotor.setPower(booleanToDouble(intake));
+        shootMotor.setPower(booleanToDouble(shoot));
+
+
+
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
-        telemetry.addData("Motors", "left (%.2f), right (%.2f)", topLeftPower, topRightPower);
+        telemetry.addData("Motors", "drive (%.2f), horizental (%.2f)", drive, horizental);
     }
 
     /*

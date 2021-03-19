@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -56,10 +56,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Pushbot: Auto Drive By Time", group="Pushbot")
-@Disabled
-public class
-PushbotAutoDriveByTime_Linear extends LinearOpMode {
+@Autonomous(name="Auton: Auto Drive By Time", group="Auton")
+
+public class Otonomis extends LinearOpMode {
 
     /* Declare OpMode members. */
     private DcMotor topLeftMotor = null;
@@ -88,7 +87,7 @@ PushbotAutoDriveByTime_Linear extends LinearOpMode {
          * The init() method of the hardware class does all the work here
          */
 
-        topLeftMotor  = hardwareMap.get(DcMotor.class, "topLeftMotor");
+        topLeftMotor = hardwareMap.get(DcMotor.class, "topLeftMotor");
         topRightMotor = hardwareMap.get(DcMotor.class, "topRightMotor");
         botRightMotor = hardwareMap.get(DcMotor.class, "botRightMotor");
         botLeftMotor = hardwareMap.get(DcMotor.class, "botLeftMotor");
@@ -110,6 +109,26 @@ PushbotAutoDriveByTime_Linear extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
+        // move forward (push wobble goal)
+        topLeftMotor.setPower(1);
+        topRightMotor.setPower(1);
+        botLeftMotor.setPower(1);
+        botRightMotor.setPower(1);
+        stopforabit(3.30);
+
+        // move forward (push wobble goal)
+        topLeftMotor.setPower(1);
+        topRightMotor.setPower(1);
+        botLeftMotor.setPower(1);
+        botRightMotor.setPower(1);
+        stopforabit(3.30);
+
+
+
+
+
     }
+
+
 }
 
